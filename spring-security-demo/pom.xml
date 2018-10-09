@@ -17,11 +17,15 @@
         <relativePath/>
     </parent>
 
+    <properties>
+        <project.version>${version}</project.version>
+    </properties>
+
     <modules>
-        <module>security-core</module>
-        <module>security-demo</module>
-        <module>security-app</module>
-        <module>security-browser</module>
+        <module>security-core</module> <!--核心业务逻辑-->
+        <module>security-demo</module> <!--浏览器安全特定代码-->
+        <module>security-app</module> <!--app相关特定代码-->
+        <module>security-browser</module> <!--样例程序-->
     </modules>
 
 
@@ -32,6 +36,27 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+
+        <dependencies>
+            <dependency>
+                <groupId>io.spring.platform</groupId>
+                <artifactId>platform-bom</artifactId>
+                <version>Brussels-SR4</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Dalston.SR2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
     <build>
         <plugins>
@@ -47,7 +72,6 @@
             </plugin>
         </plugins>
     </build>
-
 
 
 </project>
