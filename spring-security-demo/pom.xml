@@ -17,6 +17,10 @@
         <relativePath/>
     </parent>
 
+    <modules>
+        <module>security-core</module>
+    </modules>
+
 
     <dependencies>
         <dependency>
