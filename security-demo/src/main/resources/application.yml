@@ -7,3 +7,10 @@ spring:
     url: jdbc:mysql://localhost:3306/spring-security?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
+  redis:
+    port: 6379
+  session:
+    store-type: none
+security:
+  basic:
+    enabled: false
