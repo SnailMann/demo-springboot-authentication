@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Date;
 import java.util.stream.Stream;
 
 
@@ -57,5 +58,21 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
     }
+
+    @Test
+    public void whenCreateSuccess() throws Exception {
+        Date date = new Date();
+        System.out.println("传递前的时间格式：" + date.getTime());
+        String body = "{\"username\":\"jerry\",\"password\":null,\"birthday\":"+date.getTime()+"}";
+        String result = mockMvc.perform(MockMvcRequestBuilders.post("/user").contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .content(body))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("1"))
+                .andReturn().getResponse().getContentAsString();
+
+        System.out.println("返回前端的数据 : "+result);
+    }
+
+
 
 }

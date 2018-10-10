@@ -5,20 +5,30 @@ package com.snailmann.security.demo.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.snailmann.security.demo.entity.User;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
-    @GetMapping("/user")
+    @PostMapping()
+    public User create(@Valid @RequestBody User user, BindingResult errors){
+        if (errors.hasErrors()){
+            errors.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
+        }
+        user.setId(1);
+        log.info(user.toString());
+        return user;
+    }
+
+    @GetMapping()
     @JsonView(User.UserSimpleView.class)
     public List<User> query(@RequestParam String username) {
 
@@ -27,7 +37,7 @@ public class UserController {
         return users;
     }
 
-    @GetMapping("/user/{id:\\d+}")                   //：\\d+只允许id是数字
+    @GetMapping("/{id:\\d+}")                   //：\\d+只允许id是数字
     @JsonView(User.UserDetailView.class)
     public User getInfo(@PathVariable String id){
         User user = new User();

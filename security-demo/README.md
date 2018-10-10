@@ -46,5 +46,40 @@
 
 ````
 
+- Post请求，Controller上没有对应的@RequestBody去解析body会怎么样
+```
+ //如果没有@RequestBody,则具体的数据是不会被成功解析的，即user是没有数据的
+ public User create(User user){log.info(user); }
+ 
+ //correct
+ public User create(@RequestBody  User user){log.info(user); }
+```
 
+
+- SpringMVC Date时间类型解析问题
+```
+通常网上的答案就是加一些注解去格式化成某个格式，比如说yyyy-mm-dd hh:mm:ss等
+但是在前后端分离的情况下，这个数据有可能是app获取，也可能browser去获取数据，
+他们需要进行展示的时间格式不一定是一样的。所以如果在传递方就固定好格式，或者
+实现格式判断返回，其实都是很麻烦的，所以我们可以统一只传递没有格式的时间格式，
+比如时间戳。也就是说，跨服务的时间传递，我们以没有格式的形式传递，具体需要什
+么形式以需要方自己格式化
+```
+
+- @Valid注解和BindingResult验证请求参数的合法性并处理校验结果
+
+```
+    //entity中写入一些注解，比如@NotBlank的意思就是password属性不允许为空
+    @NotBlank
+    private String password;
+    
+    //Controller方法中需要对要验证的属性用@Vaild注解修饰
+     public User create(@Valid @RequestBody User user,BindingResult errors){
+        if (errors.hasErrors()){
+            errors.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
+        }
+         ...
+     }
+     
+```
 
