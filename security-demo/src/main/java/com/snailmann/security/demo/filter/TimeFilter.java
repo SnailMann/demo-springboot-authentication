@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * 需要@Compenent把filter注册到容器中，filter才会生效
  */
-/*@Component*/
+@Component
 public class TimeFilter implements Filter {
 
 
@@ -22,11 +22,16 @@ public class TimeFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         System.out.println(httpServletRequest.getRequestURL());
-        System.out.println("time filter start");
-        long startTime = System.currentTimeMillis();
-        filterChain.doFilter(servletRequest,servletResponse);
-        System.out.println("time filter spend : " + (double)(System.currentTimeMillis() - startTime)/1000 + "s");
-        System.out.println("time filter finish");
+        if (httpServletRequest.getRequestURL().toString().indexOf("/") > 0){  //意思就是凡是controller请求都直接pass，为了后面的实现，除去filter的干扰
+            filterChain.doFilter(servletRequest,servletResponse);
+        } else {
+            System.out.println("time filter start");
+            long startTime = System.currentTimeMillis();
+            filterChain.doFilter(servletRequest,servletResponse);
+            System.out.println("time filter spend : " + (double)(System.currentTimeMillis() - startTime)/1000 + "s");
+            System.out.println("time filter finish");
+        }
+
     }
 
     @Override

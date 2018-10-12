@@ -104,8 +104,14 @@ intercepter是spring框架提供的拦截方式，集成度更好，但只能拦
 3. 切片（Aspect）
 aop两个重点，一个是切入点(poincut,那些方法切入，什么时候执行)，一个是增强（advice,方法）
 
-拦截器无法拿到所拦截方法的参数（在prehandle阶段），因为参数传入到handle是在postHandle阶段执行的，
+Filter可以拦截任何东西，是servlet提供的东西，但是无法拿到原始http请求响应和方法信息。
+拦截器可以拿到原始http请求响应和方法信息，但无法拿到所拦截方法的参数（在prehandle阶段），因为参数传入到handle是在postHandle阶段执行的，
 所以这是intecpetor的一个缺陷。而aspect则没有这个问题，面向切面是可以拿到的
+
+如果filter和intercepter和aspect都存在的情况下，
+在pre阶段，filter是最先被触发的，然后intercptor,然后aspect
+filter也是最后结束的，关系就是包饺子，filter是最外层，intercptor是中层，aspect是内层
+
 ```
 
 - 如何将第三方的Filter注册到Spring容器中，以启动第三方拦截器

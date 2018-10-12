@@ -11,8 +11,8 @@ import java.util.Arrays;
  * aop核心，面向切片编程
  *
  */
-
-
+@Aspect
+@Component
 public class TimeAspect {
 
     @Around("execution(* com.snailmann.security.demo.controller.UserController.*(..))")
