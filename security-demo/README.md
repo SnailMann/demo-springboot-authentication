@@ -11,7 +11,7 @@
 
 - 我们可以在url后面加一些正则表达式，例如只允许输入的id是数字
 ```
-@GetMapping("/user/{id:\\d+}")                   //：\\d+只允许id是数字
+@GetMapping("/user/{id:\\d+}")              //：\\d+只允许id是数字
 ```
 
 - 什么时候我们会想用@JsonView注解？@JsonView的使用步骤？
@@ -80,6 +80,7 @@
         }
          ...
      }
-     
+    //如果没有使用BindingResult，验证失败的话是会错误的，如果使用了的话，则200状态码并进入到方法内部
 ```
 
+- RESTful API的错误处理机制（SpringBoot默认的错误处理机制与自定义异常处理）
