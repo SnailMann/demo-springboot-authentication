@@ -84,3 +84,44 @@
 ```
 
 - RESTful API的错误处理机制（SpringBoot默认的错误处理机制与自定义异常处理）
+
+```
+//SpringBoot的默认错误处理机制
+1.  当请求出现错误，SpringBoot后台会自定判断请求是否由浏览器发起还是别的客户端发起，如果是浏览器发起的请求，返回的
+    错误是一个html，但如果是安卓端或其他客户端发起的请求，返回的就不是html而是一段json格式的错误信息数据
+    由SpringBoot的BasicErrorController类来处理这种错误，主要看Request Headers中是否含有text/html来区别处理
+2.  如果在Controller请求中抛出异常，SpringBoot默认会将异常的信息返回出去，报500服务端错误
+3.  我们可以通过@ControllerAdvice，@ExceptionHandler来实现全局异常处理
+```
+
+
+- RESTful API的拦截
+```
+1. 过滤器（Filter）
+javax.servlet.filter包下的filter的doFilter方法实现，我们可以@Component去启动Filter
+2. 拦截器（Intercepter）
+intercepter是spring框架提供的拦截方式，集成度更好，但只能拦截controller的请求
+3. 切片（Aspect）
+aop两个重点，一个是切入点(poincut,那些方法切入，什么时候执行)，一个是增强（advice,方法）
+
+拦截器无法拿到所拦截方法的参数（在prehandle阶段），因为参数传入到handle是在postHandle阶段执行的，
+所以这是intecpetor的一个缺陷。而aspect则没有这个问题，面向切面是可以拿到的
+```
+
+- 如何将第三方的Filter注册到Spring容器中，以启动第三方拦截器
+```
+    /**
+     * 通过configuration的方式来讲Filter注册到Spring容器中
+     * 作用就是某些第三方filter无法使用@Component注解，springboot也没有提供web.xml的方式去注册
+     * 所以就必须通过configuration的方式来注册
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean getThirdPartyFilter(){
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new ThirdPartFilter());
+        List<String> urls = Stream.of("/*").collect(Collectors.toList());
+        registrationBean.setUrlPatterns(urls);
+        return registrationBean;
+    }
+```

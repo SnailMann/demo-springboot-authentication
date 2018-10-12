@@ -4,9 +4,9 @@ package com.snailmann.security.demo.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.snailmann.security.demo.entity.User;
+import com.snailmann.security.demo.execption.UserNotExistException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -61,6 +61,9 @@ public class UserController {
     @GetMapping("/{id:\\d+}")                   //：\\d+只允许id是数字
     @JsonView(User.UserDetailView.class)
     public User getInfo(@PathVariable String id){
+        log.info("进入getInfo服务");
+        if (!id.equals("1"))
+            throw new UserNotExistException(id);
         User user = new User();
         user.setUsername("jerry");
         return user;

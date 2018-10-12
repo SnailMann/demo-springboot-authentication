@@ -2,5 +2,5 @@ package com.snailmann.security.demo.service;
 
 public interface HelloService {
 
-    String greeting(String name);
+    void greeting(String name);
 }
