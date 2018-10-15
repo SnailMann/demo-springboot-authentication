@@ -1,5 +1,6 @@
 package com.snailmann.security.demo.aspect;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -8,9 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 /**
- * aop核心，面向切片编程
+ * aop核心，面向切片编程,拦截器
  *
  */
+@Slf4j
 @Aspect
 @Component
 public class TimeAspect {
@@ -24,6 +26,15 @@ public class TimeAspect {
         System.out.println("aspect end");
         return obj;
     }
+
+
+    /*@Around("execution(* com.snailmann.security.demo.async.AsyncController.*(..))")
+    public Object handleAsyncControllerMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        log.info("aspect starting");
+        Object obj = proceedingJoinPoint.proceed();
+        log.info("aspect end");
+        return obj;
+    }*/
 
 
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.request.async.CallableProcessingInterceptor;
+import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -36,11 +38,19 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * 让spring的intercptor生效
+     * 让spring的intercptor生效（这是拦截同步请求的，异步请求可能通过这个无法实现）
+     *
      * @param registry
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(timeInterceptor).addPathPatterns("/intecpetor/*");
+        //"/*/**"拦截所有
+        registry.addInterceptor(timeInterceptor).addPathPatterns("/interceptor/**");
+
     }
+
+    /*@Override //异步请求支持
+    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+       configurer.registerCallableInterceptors((CallableProcessingInterceptor) timeInterceptor);
+    }*/
 }
