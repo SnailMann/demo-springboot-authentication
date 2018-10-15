@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 @RequestMapping("/user")
 public class UserController {
 
+
     @DeleteMapping("/{id:\\d+}")
     public void delete(@PathVariable String id){
         System.out.println("record that id is " + id + " was delete");

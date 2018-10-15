@@ -135,3 +135,20 @@ filter最先执行，aspect最后执行，如果有异常，也是aspect最先�
         return registrationBean;
     }
 ```
+
+- 文件的上传和下载
+
+
+- 异步处理REST服务
+
+```
+   什么是异步处理请求，传统中，如Tomcat容器，每一个http请求，Tomcat就会有一个主线程去处理并返回Response
+   当然Tomcat也可以有多个主线程，但当请求非常多的时候，这个线程池还是不够用的。此时就需要异步处理，多个主线程只处理
+   请求，然后将耗时操作另起主线程池外的副线程去处理。 
+   
+  1. 使用Runnable异步处理Rest服务
+  2. 使用DeferredResult异步处理Rest服务
+  3. 异步处理配置
+  
+  
+```
