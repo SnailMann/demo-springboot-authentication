@@ -46,3 +46,15 @@ crypto.password包下的PasswordEncoder类
      }
 ```
 
+- RequestCache记住用户上次的请求
+
+```java
+   /**
+     *   For RequestCache
+     *   在跳转到/authentication/require之前，SpringSecurity会将当前的请求缓存到HttpSessionRequestCache中
+     *   比如说某个用户想查看某篇文章（/article），但是该文章需要用户登录才能查看,所以会自动跳转/authentication/require
+     *   但是在跳转之前，Security会记录/article这个请求到Cache中，当我们通过/authentication/require完成登录，就可以从Cache
+     *   取得上次要跳转的请求继续执行，在如下场景就是登录完毕后，自动跳转到该文章浏览
+     */
+```
+
