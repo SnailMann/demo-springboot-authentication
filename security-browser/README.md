@@ -1,6 +1,7 @@
 # Spring Security
+----
 
-- Spring Security原理
+#### Spring Security原理
 
 实际原理就是过滤器链，完全通过了过滤才能到达RestFul API
 
@@ -15,21 +16,21 @@
 
 <br>
 
-- 自定义用户凭证（即登录验证，不使用默认的方式）
+#### 自定义用户凭证（即登录验证，不使用默认的方式）
 
 实现UserDetailService,返回UserDetail.比如校验的逻辑也是SpringSecurity来实现的
 即获取了账户信息，然后我们将从数据库获取的密码拿到，交给SpringSecurity去验证就可以了
 不需要我们自己去验证的
 
-
 <br>
 
-- 密码加解密
+#### 密码加解密
 
 crypto.password包下的PasswordEncoder类
+
 <br>
 
-- 个性化用户认证流程
+#### 个性化用户认证流程
 
 ```
  @Override
@@ -49,7 +50,7 @@ crypto.password包下的PasswordEncoder类
 ```
 <br>
 
-- RequestCache记住用户上次的请求
+#### RequestCache记住用户上次的请求
 
 ```java
    /**
