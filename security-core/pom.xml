@@ -30,12 +30,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
-       <!-- Redis-->
+        <!-- Redis-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-       <!-- MySQL & JDBC-->
+        <!-- MySQL & JDBC-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -62,7 +62,7 @@
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-web</artifactId>
         </dependency>
-       <!--Commons-->
+        <!--Commons-->
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>

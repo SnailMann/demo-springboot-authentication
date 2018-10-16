@@ -160,13 +160,21 @@ filter最先执行，aspect最后执行，如果有异常，也是aspect最先�
 ```
  
   
-  
-```
+
 
 - 与前端开发并行工作
  
 ```
-    1. 使用
+ 1. 使用swagger自动生成html文档
+ 
+ 要引入springfox-swagger2和ui两个依赖包
+
 
 ```
  
+ 
+ 
+```
+ 2. 使用WireMock快速伪造RESTful服务
+
+```

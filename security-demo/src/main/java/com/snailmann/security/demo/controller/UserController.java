@@ -5,6 +5,7 @@ package com.snailmann.security.demo.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.snailmann.security.demo.entity.User;
 import com.snailmann.security.demo.execption.UserNotExistException;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,7 @@ public class UserController {
     }
 
     @GetMapping()
+    @ApiOperation("用户查询方法")
     @JsonView(User.UserSimpleView.class)
     public List<User> query(@RequestParam String username) {
 
