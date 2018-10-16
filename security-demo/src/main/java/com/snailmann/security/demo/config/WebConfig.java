@@ -1,11 +1,9 @@
 package com.snailmann.security.demo.config;
 
 
-import com.snailmann.security.browser.config.BrowserSecurityConfig;
 import com.snailmann.security.demo.filter.ThirdPartFilter;
 import com.snailmann.security.demo.interceptor.TimeInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
