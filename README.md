@@ -7,3 +7,7 @@ authentication demo
 <module>security-app</module>     <!--app相关特定代码-->
 <module>security-browser</module> <!--样例程序-->
 ```
+
+
+- Spring Security的原理
+

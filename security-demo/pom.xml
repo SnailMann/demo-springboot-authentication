@@ -15,10 +15,10 @@
     </parent>
 
     <dependencies>
-        <!--Security-Core-->
+        <!--Security-Browser-->
         <dependency>
             <groupId>com.snailmann.security</groupId>
-            <artifactId>security-core</artifactId>
+            <artifactId>security-browser</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- Spring Boot -->

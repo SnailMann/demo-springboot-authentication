@@ -11,6 +11,6 @@ spring:
     port: 6379
   session:
     store-type: none
-security:
-  basic:
-    enabled: false
+#security:
+#  basic:
+#    enabled: false
