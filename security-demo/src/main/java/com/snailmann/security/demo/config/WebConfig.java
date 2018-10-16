@@ -1,14 +1,14 @@
 package com.snailmann.security.demo.config;
 
 
+import com.snailmann.security.browser.config.BrowserSecurityConfig;
 import com.snailmann.security.demo.filter.ThirdPartFilter;
 import com.snailmann.security.demo.interceptor.TimeInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.context.request.async.CallableProcessingInterceptor;
-import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -18,6 +18,8 @@ import java.util.stream.Stream;
 
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
+
+
 
     @Autowired
     TimeInterceptor timeInterceptor;
@@ -48,6 +50,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(timeInterceptor).addPathPatterns("/interceptor/**");
 
     }
+/*
+    @Bean
+    public BrowserSecurityConfig getBrowserSecurityConfig(){
+        return new BrowserSecurityConfig();
+    }*/
+
 
     /*@Override //异步请求支持
     public void configureAsyncSupport(AsyncSupportConfigurer configurer) {

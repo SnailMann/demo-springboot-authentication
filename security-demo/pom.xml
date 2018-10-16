@@ -15,10 +15,10 @@
     </parent>
 
     <dependencies>
-        <!--Security-Core-->
+        <!--Security-Brower-->
         <dependency>
             <groupId>com.snailmann.security</groupId>
-            <artifactId>security-core</artifactId>
+            <artifactId>security-browser</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- Spring Boot -->
@@ -75,6 +75,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.5.16.RELEASE</version>
             </plugin>
         </plugins>
     </build>
