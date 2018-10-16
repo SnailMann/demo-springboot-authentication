@@ -13,6 +13,7 @@
 
 (4)前面的过滤器都是可以通过配置来决定是否开启的，后面的过滤器是必然会存在
 
+<br>
 
 - 自定义用户凭证（即登录验证，不使用默认的方式）
 
@@ -21,11 +22,12 @@
 不需要我们自己去验证的
 
 
+<br>
 
 - 密码加解密
 
 crypto.password包下的PasswordEncoder类
-
+<br>
 
 - 个性化用户认证流程
 
@@ -45,6 +47,7 @@ crypto.password包下的PasswordEncoder类
                  .csrf().disable();
      }
 ```
+<br>
 
 - RequestCache记住用户上次的请求
 
