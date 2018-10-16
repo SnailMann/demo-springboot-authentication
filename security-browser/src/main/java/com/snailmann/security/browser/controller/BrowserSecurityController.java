@@ -1,7 +1,11 @@
 package com.snailmann.security.browser.controller;
 
+import com.snailmann.security.browser.entity.SimpleResponse;
+import com.snailmann.security.core.config.SecurityCoreConfig;
+import com.snailmann.security.core.config.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -29,7 +33,10 @@ public class BrowserSecurityController {
      */
 
     private RequestCache requestCache = new HttpSessionRequestCache();
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy(); // 页面跳转工具
+
+    @Autowired
+    private SecurityProperties securityProperties;
 
     /**
      * 当需要身份认证时，跳转到这里
@@ -40,15 +47,15 @@ public class BrowserSecurityController {
      */
     @PostMapping("/authentication/require")
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
-    public String requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        SavedRequest savedRequest = requestCache.getRequest(request,response);
+    public SimpleResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        SavedRequest savedRequest = requestCache.getRequest(request,response); //获取到之前缓存的请求
         if (savedRequest != null){
             String target = savedRequest.getRedirectUrl();
             log.info("引起跳转的请求是:" + target);
-            if (StringUtils.endsWithIgnoreCase(target,".html")){
-                redirectStrategy.sendRedirect(request,response,"");
+            if (StringUtils.endsWithIgnoreCase(target,".html")){  //看缓存的请求是否是以.html结尾
+                redirectStrategy.sendRedirect(request,response,securityProperties.getBrowserProperties().getLoginPage());   //如果是则重定向到登录页面
             }
         }
-        return null;
+        return new SimpleResponse("访问的服务需要身份认证，请引导用户到登录界面");
     }
 }

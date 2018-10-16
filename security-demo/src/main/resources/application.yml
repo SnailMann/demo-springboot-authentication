@@ -14,3 +14,9 @@ spring:
 security:
   basic:
     enabled: false
+
+
+snailmann:
+  security:
+    browser:
+      loginPage: /signIn.html
