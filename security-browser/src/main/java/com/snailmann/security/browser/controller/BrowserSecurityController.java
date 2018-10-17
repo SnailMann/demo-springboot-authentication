@@ -2,6 +2,7 @@ package com.snailmann.security.browser.controller;
 
 import com.snailmann.security.browser.entity.SimpleResponse;
 import com.snailmann.security.core.config.SecurityCoreConfig;
+import com.snailmann.security.core.config.properties.BrowserProperties;
 import com.snailmann.security.core.config.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -12,6 +13,7 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,7 +47,7 @@ public class BrowserSecurityController {
      * @param response
      * @return
      */
-    @PostMapping("/authentication/require")
+    @GetMapping("/authentication/require")
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     public SimpleResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
         SavedRequest savedRequest = requestCache.getRequest(request,response); //获取到之前缓存的请求
@@ -53,9 +55,11 @@ public class BrowserSecurityController {
             String target = savedRequest.getRedirectUrl();
             log.info("引起跳转的请求是:" + target);
             if (StringUtils.endsWithIgnoreCase(target,".html")){  //看缓存的请求是否是以.html结尾
-                redirectStrategy.sendRedirect(request,response,securityProperties.getBrowserProperties().getLoginPage());   //如果是则重定向到登录页面
+                log.info(securityProperties.getBrowser().getLoginPage());
+
+                redirectStrategy.sendRedirect(request,response,securityProperties.getBrowser().getLoginPage());   //如果是则重定向到用户配置的登录页面
             }
         }
-        return new SimpleResponse("访问的服务需要身份认证，请引导用户到登录界面");
+        return new SimpleResponse("401 访问的服务需要身份认证，请引导用户到登录界面");
     }
 }

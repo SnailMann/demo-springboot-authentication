@@ -11,12 +11,22 @@ spring:
     port: 6379
   session:
     store-type: none
-security:
+security:   #Security
   basic:
     enabled: false
 
+# 开启endpoint面权限
+management:
+  security:
+    enabled: false
+
+endpoints:
+  health:
+    sensitive: false
 
 snailmann:
   security:
     browser:
       loginPage: /signIn.html
+      port: 200
+      test: hello

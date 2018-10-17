@@ -1,5 +1,7 @@
 package com.snailmann.security.browser.config;
 
+import com.snailmann.security.core.config.properties.SecurityProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    SecurityProperties securityProperties;
 
     /**
      * 密码加解密
@@ -34,7 +39,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/authentication/form")   //自定义，对应form表达的url请求
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login.html").permitAll()  //当访问/login.html是，放行，避免造成死循环
+                .antMatchers(
+                        "/login.html"
+                        ,securityProperties.getBrowser().getLoginPage()).permitAll()  //当访问/login.html是，放行，避免造成死循环
                 .antMatchers("/authentication/require").permitAll()
                 .anyRequest()
                 .authenticated()
