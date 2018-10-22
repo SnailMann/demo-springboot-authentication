@@ -33,9 +33,12 @@ snailmann:
       image:
         width: 80
         height: 23
+        length: 3
+        expireInt: 60
+        url: /user,/user/*
+      sms:
         length: 6
         expireInt: 60
-        url: /url,/url/*
 
 
 

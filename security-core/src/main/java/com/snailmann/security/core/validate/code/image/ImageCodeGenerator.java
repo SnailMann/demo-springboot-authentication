@@ -1,9 +1,11 @@
-package com.snailmann.security.core.validate.code.util;
+package com.snailmann.security.core.validate.code.image;
 
 import com.snailmann.security.core.config.properties.SecurityProperties;
+import com.snailmann.security.core.validate.code.ValidateCodeGenerator;
 import com.snailmann.security.core.validate.code.entity.ImageCode;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.snailmann.security.core.validate.code.entity.ValidateCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -11,18 +13,20 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-@Component
-public class ImageCodeUtil {
 
-    @Autowired
+public class ImageCodeGenerator implements ValidateCodeGenerator {
+
+    @Getter
+    @Setter
     SecurityProperties securityProperties;
 
-    public  ImageCode createImageCode(ServletWebRequest request) {
+    @Override
+    public ValidateCode generate(ServletWebRequest request) {
 
-        int width = ServletRequestUtils.getIntParameter(request.getRequest(),"width",
+        int width = ServletRequestUtils.getIntParameter(request.getRequest(), "width",
                 securityProperties.getValidate().getImage().getWidth());
 
-        int height = ServletRequestUtils.getIntParameter(request.getRequest(),"height",
+        int height = ServletRequestUtils.getIntParameter(request.getRequest(), "height",
                 securityProperties.getValidate().getImage().getHeight());
 
         // 在内存中创建图象
@@ -58,6 +62,7 @@ public class ImageCodeUtil {
         //image是图片，sRand是数字
         return new ImageCode(image, sRand, 60);
     }
+
 
     /**
      * 给定范围获得随机颜色

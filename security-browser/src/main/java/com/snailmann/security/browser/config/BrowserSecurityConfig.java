@@ -81,8 +81,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
 
+        //配置图形验证的Filter
         ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
         validateCodeFilter.setMyAuthenticationFailureHandler(myAuthenticationFailureHandler);
+        validateCodeFilter.setSecurityProperties(securityProperties);  //从外部传入SecurityProperties
+        validateCodeFilter.afterPropertiesSet(); //加入需要匹配的URL
+
+
         //任何请求都需要表单认证
         //为了实现验证码验证，我们需要将我们的验证码过滤器在UsernamePasswordAuthenticationFilter之前实现(过滤链)
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)

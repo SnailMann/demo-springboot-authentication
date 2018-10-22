@@ -49,12 +49,17 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     @Getter@Setter
     private SecurityProperties securityProperties;
 
-    private AntPathMatcher PathMatcher = new AntPathMatcher();
+    private AntPathMatcher pathMatcher = new AntPathMatcher();
 
 
+    /**
+     * 添加需要的匹配的URL
+     * @throws ServletException
+     */
     @Override
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
+        //将yml的配置url根据,分割出一段段的url，放入set中
         String[] configUrls = StringUtils
                 .splitByWholeSeparatorPreserveAllTokens(securityProperties.getValidate().getImage().getUrl(),",");
         urls.addAll(Arrays.asList(configUrls));
@@ -63,9 +68,17 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        //请求是/authentication/form，且是Post请求（意思就是登陆请求才做处理）
-        if (StringUtils.equals("/authentication/form",request.getRequestURI())
-            && StringUtils.equalsIgnoreCase(request.getMethod(),"post")){
+
+        boolean action = false;
+
+        for (String url :urls){
+            if (pathMatcher.match(url,request.getRequestURI())) //如果传进来的uri可以和我们配置的需要拦截的url一致，则true
+                action = true;
+        }
+
+        //before //请求是/authentication/form，且是Post请求（意思就是登陆请求才做处理）
+        //after  //如果传进来的uri可以和我们配置的需要拦截的url一致,则进入
+        if (action){
 
             try {
                 validate(new ServletWebRequest(request));
