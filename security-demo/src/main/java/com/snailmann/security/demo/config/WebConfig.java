@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
+/**
+ * WebMvcConfigurerAdapter应该就是用来代替web.xml的JavaBean方式
+ */
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 

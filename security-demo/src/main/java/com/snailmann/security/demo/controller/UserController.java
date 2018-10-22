@@ -3,13 +3,17 @@ package com.snailmann.security.demo.controller;
 
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.snailmann.security.demo.entity.User;
 import com.snailmann.security.demo.execption.UserNotExistException;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +23,13 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+
+    @GetMapping("/me")
+    public Object getCurrentUser(HttpServletResponse response){
+        response.addCookie(new Cookie("who","liwenjie"));
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
 
 
     @DeleteMapping("/{id:\\d+}")

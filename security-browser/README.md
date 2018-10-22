@@ -62,3 +62,89 @@ crypto.password包下的PasswordEncoder类
      */
 ```
 
+<br>
+
+#### 自定义登录成功和失败的处理
+
+在form表单提交的同步请求方式里，如果登录成功，SpringSecurity就会默认跳转到你上次跳转的页面
+但是在现在前后端分离开发的情况下，几乎请求都是异步的ajax请求
+
+- 自定义登录成功处理
+AuthenticationSuccessHandler接口是核心
+securityconfig中http.successHandler(myAuthenticationSuccessHandler) 显示声明我们自己的登录成功处理逻辑
+
+
+- 自定义登录失败处理
+AuthenticationFailHandler接口是核心
+
+- 可以做到根据配置来自动选择处理方式（耦合式跳转，分离式JSON）
+要使用根据配置来决定，就不能使用AuthenticationSuccessHandler了，而要使用默认的Handler
+SavedRequestAwareAuthenticationSuccessHandler
+SimpleUrlAuthenticationFailureHandler
+
+
+#### 认证处理流程
+
+UsernamePasswordAuthenticationFilter
+
+=>
+AuthenticationManager
+
+=>
+AuthenticationProvider
+
+=>
+UserDetailsService
+
+=>
+UserDetails
+
+=>
+Authentication(已认证)
+
+#### 认证结果如何在多个请求之间共享
+简单来说就是在session里共享
+
+Authentication(已认证)
+
+=>
+SecurityContext                        　　　　　　　　　　　//将Authentication封装在内部
+
+=>
+SecurityContextHolder                  　　　　　　　　//实际就是ThreadLocal,线程级变量，毕竟每一个请求都是一个线程在处理
+
+=>
+SecurityContextPersistenceFilter
+
+//这是Filter链前面的Fliter，进来的时候检查Session，有SecurityContext就放进线程。出去的时候检查线程，有就放进Session
+
+#### 获取认证用户信息
+
+
+#### 记住我
+
+- 记住我原理
+
+First: 
+
+Browser 认证请求=> UsernamePasswordAuthenticationFilter 认证成功=> RemberMeService(TokenRepository)
+
+1. 将Token写入数据库=> DB
+2. 将Token写入浏览器Cookie=> 浏览器
+ 
+After:
+
+Browser => RememberMeAuthenticationFilter 读取Cookie中的Token=> RemberMeService(TokenRepository)
+ 查找Token=>DB 拿到Token认证后获取用户信息=> UserDetailsService
+ 
+ 不同浏览器同一用户在DB会有多个token
+ 
+- 记住我功能具体实现
+
+    1. PersistentTokenRepository
+    2. JdbcTokenRepositoryImpl
+    3. UserDetailService
+
+- 记住我功能SpringSecurity源码解析
+
+

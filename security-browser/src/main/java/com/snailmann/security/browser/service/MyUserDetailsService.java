@@ -11,6 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 
+/**
+ * 这里是认证的逻辑，完成认证和授权的工作
+ */
 @Slf4j
 @Component
 public class MyUserDetailsService implements UserDetailsService {

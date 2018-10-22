@@ -22,6 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 这里完成的是认证和授权前的跳转工作，分别对不同的请求做不同的处理
+ */
 @Slf4j
 @RestController
 public class BrowserSecurityController {

@@ -9,4 +9,5 @@ public class BrowserApplication {
     public static void main(String[] args) {
         SpringApplication.run(BrowserApplication.class, args);
     }
+
 }

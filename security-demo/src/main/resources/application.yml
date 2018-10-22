@@ -28,5 +28,14 @@ snailmann:
   security:
     browser:
       loginPage: /signIn.html
-      port: 200
-      test: hello
+      loginType: JSON #REDIRECT
+    validate:
+      image:
+        width: 80
+        height: 23
+        length: 6
+        expireInt: 60
+        url: /url,/url/*
+
+
+
