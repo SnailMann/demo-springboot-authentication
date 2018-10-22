@@ -1,8 +1,8 @@
 package com.snailmann.security.core.validate.code.config;
 
 import com.snailmann.security.core.config.properties.SecurityProperties;
-import com.snailmann.security.core.validate.code.Service.ImageCodeGenerator;
 import com.snailmann.security.core.validate.code.ValidateCodeGenerator;
+import com.snailmann.security.core.validate.code.image.ImageCodeGenerator;
 import com.snailmann.security.core.validate.code.sms.DefaultSmsCodeSender;
 import com.snailmann.security.core.validate.code.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;

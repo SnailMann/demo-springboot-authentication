@@ -108,7 +108,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                         , securityProperties.getBrowser().getLoginPage()).permitAll()  //当访问/login.html是，放行，避免造成死循环
                 .antMatchers(
                         "/authentication/require",
-                        "/code/image").permitAll()
+                        "/code/*").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

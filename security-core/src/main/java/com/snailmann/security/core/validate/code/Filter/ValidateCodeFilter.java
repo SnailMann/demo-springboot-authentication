@@ -64,6 +64,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
                 .splitByWholeSeparatorPreserveAllTokens(securityProperties.getValidate().getImage().getUrl(),",");
         urls.addAll(Arrays.asList(configUrls));
         urls.add("/authentication/form");
+        urls.add("/authentication/mobile");
     }
 
     @Override

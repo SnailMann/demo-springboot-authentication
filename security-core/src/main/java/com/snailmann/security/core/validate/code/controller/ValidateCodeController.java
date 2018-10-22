@@ -1,6 +1,7 @@
 package com.snailmann.security.core.validate.code.controller;
 
 import com.snailmann.security.core.validate.code.ValidateCodeGenerator;
+import com.snailmann.security.core.validate.code.ValidateCodeProcessor;
 import com.snailmann.security.core.validate.code.entity.ImageCode;
 import com.snailmann.security.core.validate.code.entity.ValidateCode;
 import com.snailmann.security.core.validate.code.sms.SmsCodeSender;
@@ -11,6 +12,7 @@ import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -18,6 +20,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 
 @RestController
@@ -28,23 +31,34 @@ public class ValidateCodeController {
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
     @Autowired
-    @Qualifier("imageCodeGenerator")
-    private ValidateCodeGenerator imageCodeGenerator;
-
-    @Autowired
-    @Qualifier("smsCodeGenerator")
-    private ValidateCodeGenerator smsCodeGenerator;
-
-    @Autowired
-    private SmsCodeSender smsCodeSender;
+    private Map<String, ValidateCodeProcessor> validateCodeProcessors;
 
 
     /**
+     * 即将图形验证码和短信验证码的控制器合并
+     * 创建验证码，根据验证码类型不同，调用不同的 {@link ValidateCodeProcessor}接口实现
+     *
+     * @param request
+     * @param response
+     * @param type
+     * @throws Exception
+     */
+    @GetMapping("/code/{type}")
+    public void createCode(HttpServletRequest request, HttpServletResponse response, @PathVariable String type)
+            throws Exception {
+        validateCodeProcessors.get(type + "ValidateCodeProcessor").create(new ServletWebRequest(request, response));
+    }
+
+
+
+
+/*
+    *//**
      * 图形验证码验证
      * @param request
      * @param response
      * @throws IOException
-     */
+     *//*
     @GetMapping("/code/image")
     public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ImageCode imageCode = (ImageCode) imageCodeGenerator.generate(new ServletWebRequest(request));
@@ -56,11 +70,11 @@ public class ValidateCodeController {
     }
 
 
-    /**
+    *//**
      * 短信验证
      * @param request
      * @param response
-     */
+     *//*
     @GetMapping("/code/sms")
     public void createSmsCode(HttpServletRequest request,HttpServletResponse response) throws ServletRequestBindingException {
 
@@ -68,7 +82,7 @@ public class ValidateCodeController {
         sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, smsCode); //放入Session
         String mobile = ServletRequestUtils.getRequiredStringParameter(request,"mobile");
         smsCodeSender.send(mobile,smsCode.getCode()); //发送验证码
-    }
+    }*/
 
 
 }
