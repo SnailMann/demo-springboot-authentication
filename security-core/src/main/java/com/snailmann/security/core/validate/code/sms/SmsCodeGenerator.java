@@ -1,6 +1,6 @@
 package com.snailmann.security.core.validate.code.sms;
 
-import com.snailmann.security.core.config.properties.SecurityProperties;
+import com.snailmann.security.core.properties.SecurityProperties;
 import com.snailmann.security.core.validate.code.ValidateCodeGenerator;
 import com.snailmann.security.core.validate.code.entity.ValidateCode;
 import org.apache.commons.lang.RandomStringUtils;

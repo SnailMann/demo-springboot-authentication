@@ -1,21 +1,17 @@
 package com.snailmann.security.browser.config;
 
 import com.snailmann.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
-import com.snailmann.security.core.authentication.mobile.SmsCodeFilter;
-import com.snailmann.security.core.config.properties.SecurityProperties;
-import com.snailmann.security.core.validate.code.Filter.ValidateCodeFilter;
+import com.snailmann.security.core.config.AbstractChannelSecurityConfig;
+import com.snailmann.security.core.constant.SecurityConstants;
+import com.snailmann.security.core.properties.SecurityProperties;
+import com.snailmann.security.core.validate.code.config.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -24,20 +20,13 @@ import javax.sql.DataSource;
 
 /**
  * 表单验证的配置
+ * 继承于CORE的AbstractChannelSecurityConfig，间接继承于 WebSecurityConfigurerAdapter
  */
 @Configuration
-public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
+public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
 
     @Autowired
-    SecurityProperties securityProperties;
-
-    @Autowired
-    @Qualifier("myAuthenticationSuccessHandler")  //因为变量名等于组件名，所以可以省略Qualifier
-    private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
-
-    @Autowired
-    @Qualifier("myAuthenctiationFailHandler")
-    private AuthenticationFailureHandler myAuthenticationFailureHandler;
+    private SecurityProperties securityProperties;
 
     @Autowired
     private DataSource dataSource;
@@ -45,9 +34,50 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-
     @Autowired
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
+    @Autowired
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
+
+
+    /**
+     * 权限安全配置
+     *
+     * @param http
+     * @throws Exception
+     */
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+
+        //基本的http配置
+        applyPasswordAuthenticationConfig(http);
+
+        http.apply(validateCodeSecurityConfig)//为了让validateCodeFilter在AbstractPreAuthenticatedProcessingFilter前过滤
+                .and()
+            .apply(smsCodeAuthenticationSecurityConfig) //sms自定义的一些逻辑配置
+                .and()
+            .rememberMe() //RemeberMe Function
+                .tokenRepository(getPersistentTokenRepository())
+                .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds()) //过期时间
+                .userDetailsService(userDetailsService)
+                .and()
+            .authorizeRequests()
+                .antMatchers(  //匹配url
+                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
+                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
+                        securityProperties.getBrowser().getLoginPage(),
+                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
+                        "/login.html",
+                        "/user/regist")
+                .permitAll() //匹配上的全部放行
+                .anyRequest()
+                .authenticated()
+                .and()
+            .csrf().disable();
+
+    }
+
 
     /**
      * 记住我功能的Token存放
@@ -62,8 +92,6 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         return tokenRepository;
     }
 
-
-
     /**
      * 密码加解密
      *
@@ -72,58 +100,5 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-
-    /**
-     * 权限安全配置
-     *
-     * @param http
-     * @throws Exception
-     */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-
-        //配置图形验证的Filter
-        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
-        validateCodeFilter.setMyAuthenticationFailureHandler(myAuthenticationFailureHandler);
-        validateCodeFilter.setSecurityProperties(securityProperties);  //从外部传入SecurityProperties
-        validateCodeFilter.afterPropertiesSet(); //加入需要匹配的URL
-
-
-        //配置短信验证的Filter
-        SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
-        smsCodeFilter.setMyAuthenticationFailureHandler(myAuthenticationFailureHandler);
-        smsCodeFilter.setSecurityProperties(securityProperties);  //从外部传入SecurityProperties
-        smsCodeFilter.afterPropertiesSet(); //加入需要匹配的URL
-
-        //任何请求都需要表单认证
-        //为了实现验证码验证，我们需要将我们的验证码过滤器在UsernamePasswordAuthenticationFilter之前实现(过滤链)
-        http.addFilterBefore(smsCodeFilter,UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin()                                    //httpBasic()是弹窗 与 formLogin()是正常网页
-                    .loginPage("/authentication/require")           //自动登录页面，没有则使用默认的
-                    .loginProcessingUrl("/authentication/form")     //自定义，对应form表达的url请求
-                    .successHandler(myAuthenticationSuccessHandler) //加了这个就不会使用SpringSecurity默认的配置
-                    .failureHandler(myAuthenticationFailureHandler) //自定义登录失败处理逻辑
-                    .and()
-                .rememberMe()                                       //RememberMe Function
-                    .tokenRepository(getPersistentTokenRepository())
-                    .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
-                    .userDetailsService(userDetailsService)
-                    .and()
-                .authorizeRequests()
-                .antMatchers(
-                        "/login.html"
-                        , securityProperties.getBrowser().getLoginPage()).permitAll()  //当访问/login.html是，放行，避免造成死循环
-                .antMatchers(
-                        "/authentication/require",
-                        "/code/*").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .csrf().disable()
-                .apply(smsCodeAuthenticationSecurityConfig); //这一段相当于把别的jar包的配置类加载到了http这里配置的后面
     }
 }

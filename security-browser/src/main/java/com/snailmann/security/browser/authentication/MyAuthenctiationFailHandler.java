@@ -2,13 +2,12 @@ package com.snailmann.security.browser.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.snailmann.security.browser.entity.SimpleResponse;
-import com.snailmann.security.core.config.properties.LoginType;
-import com.snailmann.security.core.config.properties.SecurityProperties;
+import com.snailmann.security.core.properties.LoginType;
+import com.snailmann.security.core.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 

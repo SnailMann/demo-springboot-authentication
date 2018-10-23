@@ -1,6 +1,6 @@
 package com.snailmann.security.core.validate.code.config;
 
-import com.snailmann.security.core.config.properties.SecurityProperties;
+import com.snailmann.security.core.properties.SecurityProperties;
 import com.snailmann.security.core.validate.code.ValidateCodeGenerator;
 import com.snailmann.security.core.validate.code.image.ImageCodeGenerator;
 import com.snailmann.security.core.validate.code.sms.DefaultSmsCodeSender;
@@ -10,6 +10,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 默认配置
+ */
 @Configuration
 public class ValidateCodeBeanConfig {
 

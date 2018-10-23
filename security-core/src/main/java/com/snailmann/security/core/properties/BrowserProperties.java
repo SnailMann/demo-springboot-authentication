@@ -1,4 +1,4 @@
-package com.snailmann.security.core.config.properties;
+package com.snailmann.security.core.properties;
 
 import lombok.Data;
 

@@ -1,9 +1,8 @@
 package com.snailmann.security.browser.controller;
 
 import com.snailmann.security.browser.entity.SimpleResponse;
-import com.snailmann.security.core.config.SecurityCoreConfig;
-import com.snailmann.security.core.config.properties.BrowserProperties;
-import com.snailmann.security.core.config.properties.SecurityProperties;
+import com.snailmann.security.core.properties.BrowserProperties;
+import com.snailmann.security.core.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
