@@ -1,7 +1,7 @@
-package com.snailmann.security.core.validate.code.sms;
+package com.snailmann.security.core.validate.code.generator;
 
 import com.snailmann.security.core.properties.SecurityProperties;
-import com.snailmann.security.core.validate.code.ValidateCodeGenerator;
+import com.snailmann.security.core.validate.code.generator.ValidateCodeGenerator;
 import com.snailmann.security.core.validate.code.entity.ValidateCode;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

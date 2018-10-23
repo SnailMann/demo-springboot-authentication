@@ -1,17 +1,17 @@
 package com.snailmann.security.core.validate.code.config;
 
 import com.snailmann.security.core.properties.SecurityProperties;
-import com.snailmann.security.core.validate.code.ValidateCodeGenerator;
-import com.snailmann.security.core.validate.code.image.ImageCodeGenerator;
-import com.snailmann.security.core.validate.code.sms.DefaultSmsCodeSender;
-import com.snailmann.security.core.validate.code.sms.SmsCodeSender;
+import com.snailmann.security.core.validate.code.generator.ValidateCodeGenerator;
+import com.snailmann.security.core.validate.code.generator.ImageCodeGenerator;
+import com.snailmann.security.core.validate.code.sms.sender.DefaultSmsCodeSender;
+import com.snailmann.security.core.validate.code.sms.sender.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 默认配置
+ * ValidateCodeGenerator默认配置
  */
 @Configuration
 public class ValidateCodeBeanConfig {

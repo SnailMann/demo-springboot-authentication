@@ -1,4 +1,4 @@
-package com.snailmann.security.core.authentication.mobile;
+package com.snailmann.security.core.validate.code.sms;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,4 +1,4 @@
-package com.snailmann.security.core.authentication.mobile;
+package com.snailmann.security.core.validate.code.sms;
 
 import lombok.Getter;
 import lombok.Setter;

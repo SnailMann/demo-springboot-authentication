@@ -1,4 +1,4 @@
-package com.snailmann.security.core.validate.code.config;
+package com.snailmann.security.core.validate.code.config.security;
 
 import com.snailmann.security.core.validate.code.Filter.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.Filter;
 
 /**
- *  ValidateCode配置,需要apply
+ *  Security - ValidateCode配置,需要apply
  */
 @Component
 public class ValidateCodeSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {

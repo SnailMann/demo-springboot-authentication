@@ -1,5 +1,6 @@
-package com.snailmann.security.core.authentication.mobile;
+package com.snailmann.security.core.validate.code.Filter;
 
+import com.snailmann.security.core.validate.code.sms.SmsCodeAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

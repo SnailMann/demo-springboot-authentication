@@ -1,6 +1,6 @@
 package com.snailmann.security.core.validate.code.controller;
 
-import com.snailmann.security.core.validate.code.ValidateCodeProcessor;
+import com.snailmann.security.core.validate.code.processor.ValidateCodeProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;

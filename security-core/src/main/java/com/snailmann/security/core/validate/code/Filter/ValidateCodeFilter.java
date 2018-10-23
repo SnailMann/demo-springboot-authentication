@@ -3,7 +3,7 @@ package com.snailmann.security.core.validate.code.Filter;
 import com.snailmann.security.core.constant.SecurityConstants;
 import com.snailmann.security.core.constant.ValidateCodeType;
 import com.snailmann.security.core.properties.SecurityProperties;
-import com.snailmann.security.core.validate.code.ValidateCodeProcessorHolder;
+import com.snailmann.security.core.validate.code.processor.ValidateCodeProcessorHolder;
 import com.snailmann.security.core.validate.code.exception.ValidateCodeException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;

@@ -1,10 +1,10 @@
 /**
  * 
  */
-package com.snailmann.security.core.validate.code.sms;
+package com.snailmann.security.core.validate.code.processor;
 
 import com.snailmann.security.core.validate.code.entity.ValidateCode;
-import com.snailmann.security.core.validate.code.AbstractValidateCodeProcessor;
+import com.snailmann.security.core.validate.code.sms.sender.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.ServletRequestUtils;

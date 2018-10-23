@@ -1,7 +1,7 @@
-package com.snailmann.security.core.validate.code.image;
+package com.snailmann.security.core.validate.code.generator;
 
 import com.snailmann.security.core.properties.SecurityProperties;
-import com.snailmann.security.core.validate.code.ValidateCodeGenerator;
+import com.snailmann.security.core.validate.code.generator.ValidateCodeGenerator;
 import com.snailmann.security.core.validate.code.entity.ImageCode;
 import com.snailmann.security.core.validate.code.entity.ValidateCode;
 import lombok.Getter;

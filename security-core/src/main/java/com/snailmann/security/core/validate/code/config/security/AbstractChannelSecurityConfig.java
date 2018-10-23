@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.snailmann.security.core.config;
+package com.snailmann.security.core.validate.code.config.security;
 
 import com.snailmann.security.core.constant.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,10 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 
 /**
- * 基本登录验证配置
+ * Security - 基本登录验证配置
  * 用于给别处继承，比如Browser和App
  */
 public class AbstractChannelSecurityConfig extends WebSecurityConfigurerAdapter {
-
     /**
      * 自定义的验证成功后逻辑处理（主要作用是决定返回的东西是什么）
      */

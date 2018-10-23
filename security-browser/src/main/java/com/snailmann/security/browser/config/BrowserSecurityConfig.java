@@ -1,10 +1,10 @@
 package com.snailmann.security.browser.config;
 
-import com.snailmann.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
-import com.snailmann.security.core.config.AbstractChannelSecurityConfig;
+import com.snailmann.security.core.validate.code.config.security.SmsCodeAuthenticationSecurityConfig;
+import com.snailmann.security.core.validate.code.config.security.AbstractChannelSecurityConfig;
 import com.snailmann.security.core.constant.SecurityConstants;
 import com.snailmann.security.core.properties.SecurityProperties;
-import com.snailmann.security.core.validate.code.config.ValidateCodeSecurityConfig;
+import com.snailmann.security.core.validate.code.config.security.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

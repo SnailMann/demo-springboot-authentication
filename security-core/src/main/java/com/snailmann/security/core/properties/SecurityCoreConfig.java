@@ -1,4 +1,4 @@
-package com.snailmann.security.core.config;
+package com.snailmann.security.core.properties;
 
 import com.snailmann.security.core.properties.SecurityProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

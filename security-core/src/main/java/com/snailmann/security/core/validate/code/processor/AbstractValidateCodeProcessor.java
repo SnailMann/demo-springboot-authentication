@@ -1,6 +1,7 @@
-package com.snailmann.security.core.validate.code;
+package com.snailmann.security.core.validate.code.processor;
 
 import com.snailmann.security.core.constant.ValidateCodeType;
+import com.snailmann.security.core.validate.code.generator.ValidateCodeGenerator;
 import com.snailmann.security.core.validate.code.entity.ValidateCode;
 import com.snailmann.security.core.validate.code.exception.ValidateCodeException;
 import org.apache.commons.lang.StringUtils;

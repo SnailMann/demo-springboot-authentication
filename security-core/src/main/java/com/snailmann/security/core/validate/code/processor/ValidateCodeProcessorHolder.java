@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.snailmann.security.core.validate.code;
+package com.snailmann.security.core.validate.code.processor;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.snailmann.security.core.validate.code.sms;
+package com.snailmann.security.core.validate.code.sms.sender;
 
 public interface SmsCodeSender {
 

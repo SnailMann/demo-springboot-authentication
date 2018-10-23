@@ -1,4 +1,4 @@
-package com.snailmann.security.core.validate.code;
+package com.snailmann.security.core.validate.code.generator;
 
 import com.snailmann.security.core.validate.code.entity.ValidateCode;
 import org.springframework.web.context.request.ServletWebRequest;
