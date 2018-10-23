@@ -1,11 +1,12 @@
 /**
  * 
  */
-package com.snailmann.security.core.validate.code.impl;
+package com.snailmann.security.core.validate.code.image;
 
 import javax.imageio.ImageIO;
 
 import com.snailmann.security.core.validate.code.entity.ImageCode;
+import com.snailmann.security.core.validate.code.AbstractValidateCodeProcessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 

@@ -1,10 +1,8 @@
-package com.snailmann.security.core.validate.code.impl;
+package com.snailmann.security.core.validate.code;
 
 import com.snailmann.security.core.validate.code.ValidateCodeGenerator;
 import com.snailmann.security.core.validate.code.ValidateCodeProcessor;
 import com.snailmann.security.core.validate.code.entity.ValidateCode;
-import com.snailmann.security.core.validate.code.entity.ValidateCodeType;
-import com.snailmann.security.core.validate.code.exception.ValidateCodeException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
@@ -27,6 +25,11 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     private Map<String, ValidateCodeGenerator> validateCodeGenerators;
 
 
+    /**
+     * 类似桥接模式吧
+     * @param request
+     * @throws Exception
+     */
     @Override
     public void create(ServletWebRequest request) throws Exception {
         C validateCode = generate(request);   //生成

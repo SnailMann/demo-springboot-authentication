@@ -35,7 +35,7 @@ snailmann:
         height: 23
         length: 3
         expireInt: 60
-        url: /user,/user/*
+        url: /user #,/user/*
       sms:
         length: 6
         expireInt: 60

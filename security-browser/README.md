@@ -83,9 +83,9 @@ SavedRequestAwareAuthenticationSuccessHandler
 SimpleUrlAuthenticationFailureHandler
 
 
-#### 认证处理流程
+#### 账户密码认证处理流程
 
-UsernamePasswordAuthenticationFilter
+UsernamePasswordAuthenticationFilter（准备好未认证的UsernamePasswordAuthenticationToken）
 
 =>
 AuthenticationManager
@@ -102,21 +102,50 @@ UserDetails
 =>
 Authentication(已认证)
 
+
+#### SMS认证流程(自定义)
+
+SmsAuthenticationFilter（准备好未认证的SmsAuthenticationToken）
+
+=>
+
+AuthenticationManager
+
+=>
+
+SmsAuthenticationProvider
+
+=>
+
+UserDetailsService(获取用户信息进行比对校验)
+
+=>
+
+UserDetials
+
+=>
+
+Authentication(如果校验成功，将SmsAuthenticationToken标记到Authentication)
+
+
 #### 认证结果如何在多个请求之间共享
 简单来说就是在session里共享
 
 Authentication(已认证)
 
 =>
-SecurityContext                        　　　　　　　　　　　//将Authentication封装在内部
+SecurityContext                        　　　　　　　　　　　
+将Authentication封装在内部
 
 =>
-SecurityContextHolder                  　　　　　　　　//实际就是ThreadLocal,线程级变量，毕竟每一个请求都是一个线程在处理
+SecurityContextHolder                  　　　　　　　
+
+实际就是ThreadLocal,线程级变量，毕竟每一个请求都是一个线程在处理
 
 =>
 SecurityContextPersistenceFilter
 
-//这是Filter链前面的Fliter，进来的时候检查Session，有SecurityContext就放进线程。出去的时候检查线程，有就放进Session
+这是Filter链前面的Fliter，进来的时候检查Session，有SecurityContext就放进线程。出去的时候检查线程，有就放进Session
 
 #### 获取认证用户信息
 
