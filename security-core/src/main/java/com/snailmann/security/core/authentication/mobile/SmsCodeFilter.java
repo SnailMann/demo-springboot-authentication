@@ -63,7 +63,9 @@ public class SmsCodeFilter extends OncePerRequestFilter implements InitializingB
         //将yml的配置url根据,分割出一段段的url，放入set中
         String[] configUrls = StringUtils
                 .splitByWholeSeparatorPreserveAllTokens(securityProperties.getValidate().getSms().getUrl(),",");
-        urls.addAll(Arrays.asList(configUrls));
+        if (configUrls != null){
+            urls.addAll(Arrays.asList(configUrls));
+        }
         urls.add("/authentication/mobile");
     }
 

@@ -63,7 +63,9 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         //将yml的配置url根据,分割出一段段的url，放入set中
         String[] configUrls = StringUtils
                 .splitByWholeSeparatorPreserveAllTokens(securityProperties.getValidate().getImage().getUrl(),",");
-        urls.addAll(Arrays.asList(configUrls));
+        if (configUrls != null){
+            urls.addAll(Arrays.asList(configUrls));
+        }
         urls.add("/authentication/form");
         /*urls.add("/authentication/mobile");*/
     }

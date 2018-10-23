@@ -9,7 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-public class SmsAuthenticationProvider implements AuthenticationProvider {
+public class SmsCodeAuthenticationProvider implements AuthenticationProvider {
 
     @Getter
     @Setter

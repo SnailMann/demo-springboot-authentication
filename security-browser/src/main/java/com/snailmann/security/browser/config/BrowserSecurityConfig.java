@@ -1,5 +1,7 @@
 package com.snailmann.security.browser.config;
 
+import com.snailmann.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.snailmann.security.core.authentication.mobile.SmsCodeFilter;
 import com.snailmann.security.core.config.properties.SecurityProperties;
 import com.snailmann.security.core.validate.code.Filter.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
 
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
 
     /**
      * 记住我功能的Token存放
@@ -88,9 +92,16 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         validateCodeFilter.afterPropertiesSet(); //加入需要匹配的URL
 
 
+        //配置短信验证的Filter
+        SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
+        smsCodeFilter.setMyAuthenticationFailureHandler(myAuthenticationFailureHandler);
+        smsCodeFilter.setSecurityProperties(securityProperties);  //从外部传入SecurityProperties
+        smsCodeFilter.afterPropertiesSet(); //加入需要匹配的URL
+
         //任何请求都需要表单认证
         //为了实现验证码验证，我们需要将我们的验证码过滤器在UsernamePasswordAuthenticationFilter之前实现(过滤链)
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+        http.addFilterBefore(smsCodeFilter,UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()                                    //httpBasic()是弹窗 与 formLogin()是正常网页
                     .loginPage("/authentication/require")           //自动登录页面，没有则使用默认的
                     .loginProcessingUrl("/authentication/form")     //自定义，对应form表达的url请求
@@ -112,6 +123,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .csrf().disable();
+                .csrf().disable()
+                .apply(smsCodeAuthenticationSecurityConfig); //这一段相当于把别的jar包的配置类加载到了http这里配置的后面
     }
 }
