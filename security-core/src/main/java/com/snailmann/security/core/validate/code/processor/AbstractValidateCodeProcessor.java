@@ -15,6 +15,9 @@ import org.springframework.web.context.request.ServletWebRequest;
 import java.util.Map;
 
 /**
+ * 可以说这是一个模板方法设计模式的体现
+ *
+ *
  * AbstractValidateCodeProcessor 是一个通用的抽象类Processor
  * 相同的行为都定义在此处，不同行为都定义在子类
  *
@@ -40,7 +43,11 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
 
 
     /**
-     * 类似桥接模式吧
+     * 生成code需要经历的三个模板步骤
+     *
+     * 模板设计模式，定义算法的模板
+     * 相同方法在父类实现，例如create,save
+     * 不同方法在子类实现，例如send
      * @param request
      * @throws Exception
      */
@@ -54,6 +61,9 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     /**
      * 生成校验码
      *
+     * 算是策略设计模式的体现，根据传入的算法的不同，而执行不同的行为
+     * 这里是拿到不同的generator，而执行不同的行为
+     *
      * @param request
      * @return
      */
@@ -61,6 +71,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     private C generate(ServletWebRequest request) {
         String type = getValidateCodeType(request).toString().toLowerCase();
         String generatorName = type + "CodeGenerator";   //拼接具体类型的Generator的名字
+        //
         ValidateCodeGenerator validateCodeGenerator = validateCodeGenerators.get(generatorName);
         if (validateCodeGenerator == null) {
             throw new ValidateCodeException("验证码生成器" + generatorName + "不存在");
