@@ -74,6 +74,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
             response.getWriter().write(objectMapper.writeValueAsString(authentication));
         } else {   //如果不是JSON,则执行默认的方法，耦合式的跳转
             super.onAuthenticationSuccess(request,response,authentication);
+
         }
 
 

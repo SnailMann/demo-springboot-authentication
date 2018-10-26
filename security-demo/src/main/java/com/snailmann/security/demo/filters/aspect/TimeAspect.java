@@ -1,4 +1,4 @@
-package com.snailmann.security.demo.aspect;
+package com.snailmann.security.demo.filters.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
